@@ -44,6 +44,7 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
   - Localhost
   - Cloudflared
   - LocalXpose
+  - Pinggy
 - Mask URL support 
 - Docker support
 
@@ -187,3 +188,4 @@ $ zphisher
 <table>
 
 <!-- // -->
+
