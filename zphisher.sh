@@ -513,21 +513,7 @@ start_pinggy() {
     read -p "[?] Enter your local port (default 8080): " port
     port=${port:-8080}
 
-    echo -e "[*] Please wait while we generate your public link...\n"
-
-    # Start Pinggy tunnel in background
-    ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:$port qr@free.pinggy.io > pinggy.log 2>&1 &
-    sleep 5
-
-    # Extract public link from Pinggy output
-    PINGGY_URL=$(grep -o 'https://[0-9a-z.-]*\.pinggy\.io' pinggy.log | head -n 1)
-
-    if [[ -n "$PINGGY_URL" ]]; then
-        echo -e "[+] Pinggy URL: $PINGGY_URL"
-        echo -e "[*] Share this link with the target.\n"
-    else
-        echo -e "[!] Could not retrieve Pinggy URL. Check pinggy.log for details."
-    fi
+    ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:$port qr@free.pinggy.io
 }
 
 ## Start localhost
