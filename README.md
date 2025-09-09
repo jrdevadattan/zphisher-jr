@@ -12,19 +12,20 @@ Currently supports [Pinggy](https://pinggy.io/) — more tunnelling services com
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎯 30+ phishing templates (from the original Zphisher)
-- ⚡ Automated phishing page generation
-- 🌐 Integrated **Pinggy** tunnelling support
-- 🔄 Works with Cloudflared & LocalXpose
-- 💻 Simple CLI interface
+- 30+ phishing templates (from the original Zphisher)
+- Automated phishing page generation
+- Integrated **Pinggy** tunnelling support
+- Works with Cloudflared & LocalXpose
+- Simple CLI interface
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### 1️⃣ Clone the Repository
+### Clone the Repository
 ```bash
 git clone https://github.com/jrdevadattan/zphisher-jr.git
 cd zphisher-jr
+
